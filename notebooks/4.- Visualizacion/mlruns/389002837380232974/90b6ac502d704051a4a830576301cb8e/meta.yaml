@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/USER/Documents/MLOPS-MNA-Equipo-17/notebooks/4.-%20Visualizacion/mlruns/389002837380232974/90b6ac502d704051a4a830576301cb8e/artifacts
+end_time: 1729316850791
+entry_point_name: ''
+experiment_id: '389002837380232974'
+lifecycle_stage: active
+run_id: 90b6ac502d704051a4a830576301cb8e
+run_name: Random_Forest
+run_uuid: 90b6ac502d704051a4a830576301cb8e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1729316845075
+status: 3
+tags: []
+user_id: USER
