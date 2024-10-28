@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/USER/Documents/MLOPS-MNA-Equipo-17/notebooks/4.-%20Visualizacion/mlruns/389002837380232974/712992c6552d461fa578995ff3c99d3b/artifacts
+end_time: 1729317020012
+entry_point_name: ''
+experiment_id: '389002837380232974'
+lifecycle_stage: active
+run_id: 712992c6552d461fa578995ff3c99d3b
+run_name: Decision_Tree
+run_uuid: 712992c6552d461fa578995ff3c99d3b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1729317018040
+status: 3
+tags: []
+user_id: USER
