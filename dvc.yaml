@@ -1,11 +1,11 @@
 stages:
   load_data:
-    cmd: python src/load_data_v2.py ${data.filepath} ${data.processed}train_test_data.csv
+    cmd: python src/load_data_v2.py "${data.filepath}" "${data.processed}train_test_data.csv"
     deps:
       - src/load_data_v2.py
       - ${data.filepath}
     outs:
-      - ${data.processed}train_test_data.csv
+      - "${data.processed}train_test_data.csv"
 
   preprocess:
       cmd: python src/preprocess_data_v2.py ${data.processed}train_test_data.csv ${data.processed}X_train_scaled.csv ${data.processed}X_test_scaled.csv ${data.processed}X_train.csv ${data.processed}X_test.csv ${data.processed}y_train.csv ${data.processed}y_test.csv
@@ -29,15 +29,15 @@ stages:
       - ${data.processed}y_train.csv
       - ${data.processed}y_test.csv
     outs:
-      - ${data.models}decision_tree.pkl
+      - ${data.models}decision_tree_model.pkl
 
   evaluate_decision_tree:
-    cmd: python src/evaluate_v2.py ${data.models}decision_tree.pkl ${data.processed}X_test_scaled.csv ${data.processed}y_test.csv ${data.reports}decision_tree_evaluation.txt
+    cmd: python src/evaluate_v2.py ${data.models}decision_tree_model.pkl ${data.processed}X_test_scaled.csv ${data.processed}y_test.csv ${data.reports}decision_tree_evaluation.txt
     deps:
       - src/evaluate_v2.py
-      - ${data.models}decision_tree.pkl
+      - ${data.models}decision_tree_model.pkl
       - ${data.processed}X_test_scaled.csv
       - ${data.processed}y_test.csv
     outs:
-      - reports/decision_tree_evaluation.txt
+      - ${data.reports}decision_tree_evaluation.txt
 

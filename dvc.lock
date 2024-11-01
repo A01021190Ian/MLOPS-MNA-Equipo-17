@@ -1,15 +1,15 @@
 schema: '2.0'
 stages:
   load_data:
-    cmd: python src/load_data.py "D:/Cursos/Maestria - IA 
-      Aplicada/MLOps/Proyecto/MLOPS-MNA-Equipo-17/data1/raw/TCGA_GBM_LGG_Mutations_all.csv"
+    cmd: python src/load_data_v2.py "D:/Cursos/Maestria - IA 
+      Aplicada/MLOps/Proyecto/github/MLOPS-MNA-Equipo-17/data1/raw/TCGA_GBM_LGG_Mutations_all.csv"
       "data1/processed/train_test_data.csv"
     deps:
     - path: data1\raw\TCGA_GBM_LGG_Mutations_all.csv
       hash: md5
       md5: 611d22420c5d0651409a19262a623424
       size: 264750
-    - path: src/load_data.py
+    - path: src/load_data_v2.py
       hash: md5
       md5: 92f6a96a879e18ef79adc702db997efa
       size: 315
@@ -19,55 +19,72 @@ stages:
       md5: f0d645f40024b63b937182b3103171ba
       size: 264747
   preprocess:
-    cmd: python src/preprocess_data.py data1/processed/train_test_data.csv data1/processed/X_train.csv
-      data1/processed/X_test.csv data1/processed/y_train.csv data1/processed/y_test.csv
+    cmd: python src/preprocess_data_v2.py data1/processed/train_test_data.csv data1/processed/X_train_scaled.csv
+      data1/processed/X_test_scaled.csv data1/processed/X_train.csv data1/processed/X_test.csv
+      data1/processed/y_train.csv data1/processed/y_test.csv
     deps:
     - path: data1/processed/train_test_data.csv
       hash: md5
       md5: f0d645f40024b63b937182b3103171ba
       size: 264747
-    - path: src/preprocess_data.py
+    - path: src/preprocess_data_v2.py
       hash: md5
-      md5: dedc5fd33470406c1721186d6bf65238
-      size: 5219
+      md5: 0c499ac6c1aec7c24f0505f9c57c8e86
+      size: 5517
     outs:
     - path: data1/processed/X_test.csv
       hash: md5
-      md5: 715745ca00fc381fec85f89f7d7d75ee
-      size: 14345
+      md5: 42902a495a171d51460697da79dfa3e5
+      size: 12256
+    - path: data1/processed/X_test_scaled.csv
+      hash: md5
+      md5: 07fe11b611cbef61e72963fe24d4777f
+      size: 109637
     - path: data1/processed/X_train.csv
       hash: md5
-      md5: 26e23c0e80b1db161b673c719c48abd2
-      size: 33062
+      md5: c980a8cc5b25071778ee76358cb81402
+      size: 28243
+    - path: data1/processed/X_train_scaled.csv
+      hash: md5
+      md5: de9c7b01f40dea4606becef189d18b9b
+      size: 254664
     - path: data1/processed/y_test.csv
       hash: md5
-      md5: 2ac982e1ab14ebde8ef56b8fc0d73fc7
+      md5: 33b21fef6cdecbb18e422d15f80e7687
       size: 781
     - path: data1/processed/y_train.csv
       hash: md5
-      md5: 43380155db876d4c71d07594c39f7f1b
+      md5: 8f3a6a8253673527c1a6724ecf7ea948
       size: 1804
   train:
-    cmd: python src/train.py data1/processed/X_train.csv data1/processed/y_train.csv
-      models/model.pkl
+    cmd: python src/train_v2.py data1/processed/X_train_scaled.csv data1/processed/X_test_scaled.csv
+      data1/processed/y_train.csv data1/processed/y_test.csv decision_tree
     deps:
-    - path: data1/processed/X_train.csv
+    - path: data1/processed/X_test_scaled.csv
       hash: md5
-      md5: 26e23c0e80b1db161b673c719c48abd2
-      size: 33062
+      md5: 07fe11b611cbef61e72963fe24d4777f
+      size: 109637
+    - path: data1/processed/X_train_scaled.csv
+      hash: md5
+      md5: de9c7b01f40dea4606becef189d18b9b
+      size: 254664
+    - path: data1/processed/y_test.csv
+      hash: md5
+      md5: 33b21fef6cdecbb18e422d15f80e7687
+      size: 781
     - path: data1/processed/y_train.csv
       hash: md5
-      md5: 43380155db876d4c71d07594c39f7f1b
+      md5: 8f3a6a8253673527c1a6724ecf7ea948
       size: 1804
-    - path: src/train.py
+    - path: src/train_v2.py
       hash: md5
-      md5: effe03eb7afd4fdca9f7a96c278ce4a6
-      size: 3015
+      md5: 52f094a04c220a43ab16de0404cbfb22
+      size: 2764
     outs:
-    - path: models/model.pkl
+    - path: models/decision_tree_model.pkl
       hash: md5
-      md5: c00b27d62e3a327828f082ec9b5ee22b
-      size: 193401
+      md5: 97ffbd63237dc1f67ae935465c09d3dc
+      size: 3433
   evaluate:
     cmd: python src/evaluate.py models/model.pkl data1/processed/X_test.csv data1/processed/y_test.csv
     deps:
@@ -87,3 +104,28 @@ stages:
       hash: md5
       md5: 2dd86af5739babee502073cbdceda81e
       size: 1063
+  evaluate_decision_tree:
+    cmd: python src/evaluate_v2.py models/decision_tree_model.pkl data1/processed/X_test_scaled.csv
+      data1/processed/y_test.csv reports/decision_tree_evaluation.txt
+    deps:
+    - path: data1/processed/X_test_scaled.csv
+      hash: md5
+      md5: 07fe11b611cbef61e72963fe24d4777f
+      size: 109637
+    - path: data1/processed/y_test.csv
+      hash: md5
+      md5: 33b21fef6cdecbb18e422d15f80e7687
+      size: 781
+    - path: models/decision_tree_model.pkl
+      hash: md5
+      md5: 97ffbd63237dc1f67ae935465c09d3dc
+      size: 3433
+    - path: src/evaluate_v2.py
+      hash: md5
+      md5: ac7bde2edf6e5aab1912c39984422d4e
+      size: 1193
+    outs:
+    - path: reports/decision_tree_evaluation.txt
+      hash: md5
+      md5: c50598c3051cca9e0ba4b60a448d9643
+      size: 402

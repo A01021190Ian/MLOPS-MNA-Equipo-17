@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/USER/Documents/MLOPS-MNA-Equipo-17/notebooks/4.-%20Visualizacion/mlruns/389002837380232974/ebd1e83d6f0d42c0859928b36a5404a2/artifacts
+end_time: 1730504290795
+entry_point_name: ''
+experiment_id: '641267808206903981'
+lifecycle_stage: active
+run_id: ebd1e83d6f0d42c0859928b36a5404a2
+run_name: Decision_Tree
+run_uuid: ebd1e83d6f0d42c0859928b36a5404a2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1730504280894
+status: 3
+tags: []
+user_id: ASUS

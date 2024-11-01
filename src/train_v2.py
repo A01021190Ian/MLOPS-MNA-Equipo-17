@@ -9,6 +9,7 @@ import sys
 import joblib
 import mlflow
 import yaml
+import os
 
 def load_params():
     with open("params.yaml", 'r') as ymlfile:
@@ -31,12 +32,15 @@ def train_and_log_model(model, model_name, X_train, X_test, y_train, y_test, par
         mlflow.log_params(params)
         mlflow.log_metrics({"accuracy": acc, "precision": prec, "recall": rec})
         # Log the model
-        mlflow.sklearn.log_model(model, artifact_path="models")
+        model_dirpath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+        mlflow.sklearn.log_model(model,  artifact_path= os.path.join(model_dirpath,"models"))
 
 
-def train_model(X_train,X_test,y_train,y_test):
+def train_model(X_train_path,X_test_path,y_train_path,y_test_path):
     X_train = pd.read_csv(X_train_path)
+    X_test = pd.read_csv(X_test_path)
     y_train = pd.read_csv(y_train_path)
+    y_test = pd.read_csv(y_test_path)
     #MLFlow
     mlflow.set_experiment(params['mlflow']['experiment_name'])
     mlflow.set_tracking_uri(params['mlflow']['tracking_uri'])
@@ -62,10 +66,12 @@ def train_model(X_train,X_test,y_train,y_test):
 
 if __name__ == '__main__':
     X_train_path = sys.argv[1]
-    y_train_path = sys.argv[2]
-    model_type = sys.argv[3]
+    X_test_path = sys.argv[2]
+    y_train_path = sys.argv[3]
+    y_test_path = sys.argv[4]
+    model_type = sys.argv[5]
     model_dir = params['data']['models']
     model_path = f"{model_dir}/{model_type}_model.pkl"
 
-    model = train_model(X_train_path, y_train_path)
+    model = train_model(X_train_path, X_test_path, y_train_path, y_test_path)
     joblib.dump(model, model_path)
