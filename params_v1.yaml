@@ -1,0 +1,4 @@
+data:
+  filepath: "D:/Cursos/Maestria - IA Aplicada/MLOps/Proyecto/MLOPS-MNA-Equipo-17/data1/raw/TCGA_GBM_LGG_Mutations_all.csv"
+  processed: data1/processed/
+  models: models/

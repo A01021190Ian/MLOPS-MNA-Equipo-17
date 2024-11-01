@@ -1,4 +1,15 @@
 data:
-  filepath: "D:/Cursos/Maestria - IA Aplicada/MLOps/Proyecto/MLOPS-MNA-Equipo-17/data1/raw/TCGA_GBM_LGG_Mutations_all.csv"
+  filepath: "D:/Cursos/Maestria - IA Aplicada/MLOps/Proyecto/github/MLOPS-MNA-Equipo-17/data1/raw/TCGA_GBM_LGG_Mutations_all.csv"
   processed: data1/processed/
   models: models/
+  reports: reports/
+
+models:
+  decision_tree:
+    max_depth: 5
+    random_state: 42
+    criterion: "entropy"
+
+mlflow:
+  experiment_name: "Tumor_Classification"
+  tracking_uri: "http://127.0.0.1:5000"
