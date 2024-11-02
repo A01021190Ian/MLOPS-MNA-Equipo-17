@@ -20,7 +20,7 @@ stages:
         - ${data.processed}y_train.csv
         - ${data.processed}y_test.csv
 
-  train:
+  train_decision_tree:
     cmd: python src/train_v2.py ${data.processed}X_train_scaled.csv ${data.processed}X_test_scaled.csv ${data.processed}y_train.csv ${data.processed}y_test.csv decision_tree
     deps:
       - src/train_v2.py
@@ -30,6 +30,28 @@ stages:
       - ${data.processed}y_test.csv
     outs:
       - ${data.models}decision_tree_model.pkl
+  
+  train_logistic_regression:
+    cmd: python src/train_v2.py ${data.processed}X_train_scaled.csv ${data.processed}X_test_scaled.csv ${data.processed}y_train.csv ${data.processed}y_test.csv logistic_regression
+    deps:
+      - src/train_v2.py
+      - ${data.processed}X_train_scaled.csv
+      - ${data.processed}X_test_scaled.csv
+      - ${data.processed}y_train.csv
+      - ${data.processed}y_test.csv
+    outs:
+      - ${data.models}logistic_regression_model.pkl
+  
+  train_random_forest:
+    cmd: python src/train_v2.py ${data.processed}X_train_scaled.csv ${data.processed}X_test_scaled.csv ${data.processed}y_train.csv ${data.processed}y_test.csv random_forest
+    deps:
+      - src/train_v2.py
+      - ${data.processed}X_train_scaled.csv
+      - ${data.processed}X_test_scaled.csv
+      - ${data.processed}y_train.csv
+      - ${data.processed}y_test.csv
+    outs:
+      - ${data.models}random_forest_model.pkl
 
   evaluate_decision_tree:
     cmd: python src/evaluate_v2.py ${data.models}decision_tree_model.pkl ${data.processed}X_test_scaled.csv ${data.processed}y_test.csv ${data.reports}decision_tree_evaluation.txt
@@ -40,4 +62,24 @@ stages:
       - ${data.processed}y_test.csv
     outs:
       - ${data.reports}decision_tree_evaluation.txt
+
+  evaluate_logistic_regression:
+    cmd: python src/evaluate_v2.py ${data.models}logistic_regression_model.pkl ${data.processed}X_test_scaled.csv ${data.processed}y_test.csv ${data.reports}logistic_regression_evaluation.txt
+    deps:
+      - src/evaluate_v2.py
+      - ${data.models}logistic_regression_model.pkl
+      - ${data.processed}X_test_scaled.csv
+      - ${data.processed}y_test.csv
+    outs:
+      - ${data.reports}logistic_regression_evaluation.txt
+  
+  evaluate_random_forest:
+    cmd: python src/evaluate_v2.py ${data.models}random_forest_model.pkl ${data.processed}X_test_scaled.csv ${data.processed}y_test.csv ${data.reports}random_forest_evaluation.txt
+    deps:
+      - src/evaluate_v2.py
+      - ${data.models}random_forest_model.pkl
+      - ${data.processed}X_test_scaled.csv
+      - ${data.processed}y_test.csv
+    outs:
+      - ${data.reports}random_forest_evaluation.txt
 

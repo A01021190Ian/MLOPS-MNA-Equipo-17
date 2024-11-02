@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/USER/Documents/MLOPS-MNA-Equipo-17/notebooks/4.-%20Visualizacion/mlruns/389002837380232974/53d639465b13480399bcfcb8dcdf713a/artifacts
+end_time: 1730506605221
+entry_point_name: ''
+experiment_id: '641267808206903981'
+lifecycle_stage: active
+run_id: 53d639465b13480399bcfcb8dcdf713a
+run_name: logistic_regression
+run_uuid: 53d639465b13480399bcfcb8dcdf713a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1730506594341
+status: 3
+tags: []
+user_id: ASUS
