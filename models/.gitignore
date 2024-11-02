@@ -1,1 +1,4 @@
 /model.pkl
+/decision_tree_model.pkl
+/logistic_regression_model.pkl
+/random_forest_model.pkl
