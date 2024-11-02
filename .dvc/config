@@ -5,3 +5,5 @@
     url = D:\Cursos\Maestria - IA Aplicada\MLOps\Proyecto\DVC_STORAGE
 ['remote "storage"']
     url = gdrive://199JJM8uR5BU4d2zD7Qn8Kz7KRg5Xg9nq
+    gdrive_client_id = 93875975710-se2barf2jr954qa1bc91irmiq2a346qu.apps.googleusercontent.com
+    gdrive_client_secret = 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
