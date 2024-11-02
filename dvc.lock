@@ -1,11 +1,9 @@
 schema: '2.0'
 stages:
   load_data:
-    cmd: python src/load_data_v2.py "D:/Cursos/Maestria - IA 
-      Aplicada/MLOps/Proyecto/github/MLOPS-MNA-Equipo-17/data1/raw/TCGA_GBM_LGG_Mutations_all.csv"
-      "data1/processed/train_test_data.csv"
+    cmd: py src/load_data_v2.py "data1/raw/TCGA_GBM_LGG_Mutations_all.csv" "data1/processed/train_test_data.csv"
     deps:
-    - path: data1\raw\TCGA_GBM_LGG_Mutations_all.csv
+    - path: data1/raw/TCGA_GBM_LGG_Mutations_all.csv
       hash: md5
       md5: 611d22420c5d0651409a19262a623424
       size: 264750
@@ -19,7 +17,7 @@ stages:
       md5: f0d645f40024b63b937182b3103171ba
       size: 264747
   preprocess:
-    cmd: python src/preprocess_data_v2.py data1/processed/train_test_data.csv data1/processed/X_train_scaled.csv
+    cmd: py src/preprocess_data_v2.py data1/processed/train_test_data.csv data1/processed/X_train_scaled.csv
       data1/processed/X_test_scaled.csv data1/processed/X_train.csv data1/processed/X_test.csv
       data1/processed/y_train.csv data1/processed/y_test.csv
     deps:
@@ -105,7 +103,7 @@ stages:
       md5: 2dd86af5739babee502073cbdceda81e
       size: 1063
   evaluate_decision_tree:
-    cmd: python src/evaluate_v2.py models/decision_tree_model.pkl data1/processed/X_test_scaled.csv
+    cmd: py src/evaluate_v2.py models/decision_tree_model.pkl data1/processed/X_test_scaled.csv
       data1/processed/y_test.csv reports/decision_tree_evaluation.txt
     deps:
     - path: data1/processed/X_test_scaled.csv
@@ -118,7 +116,7 @@ stages:
       size: 781
     - path: models/decision_tree_model.pkl
       hash: md5
-      md5: 97ffbd63237dc1f67ae935465c09d3dc
+      md5: 62fc6e972b19a85bcc63fa7f9d39001f
       size: 3433
     - path: src/evaluate_v2.py
       hash: md5
@@ -130,7 +128,7 @@ stages:
       md5: c50598c3051cca9e0ba4b60a448d9643
       size: 402
   train_decision_tree:
-    cmd: python src/train_v2.py data1/processed/X_train_scaled.csv data1/processed/X_test_scaled.csv
+    cmd: py src/train_v2.py data1/processed/X_train_scaled.csv data1/processed/X_test_scaled.csv
       data1/processed/y_train.csv data1/processed/y_test.csv decision_tree
     deps:
     - path: data1/processed/X_test_scaled.csv
@@ -156,10 +154,10 @@ stages:
     outs:
     - path: models/decision_tree_model.pkl
       hash: md5
-      md5: 97ffbd63237dc1f67ae935465c09d3dc
+      md5: 62fc6e972b19a85bcc63fa7f9d39001f
       size: 3433
   train_logistic_regression:
-    cmd: python src/train_v2.py data1/processed/X_train_scaled.csv data1/processed/X_test_scaled.csv
+    cmd: py src/train_v2.py data1/processed/X_train_scaled.csv data1/processed/X_test_scaled.csv
       data1/processed/y_train.csv data1/processed/y_test.csv logistic_regression
     deps:
     - path: data1/processed/X_test_scaled.csv
@@ -185,10 +183,10 @@ stages:
     outs:
     - path: models/logistic_regression_model.pkl
       hash: md5
-      md5: aa81830b3f2eba85052215a8db465e97
+      md5: f259f0062a6790e5005f57750e286c31
       size: 1531
   train_random_forest:
-    cmd: python src/train_v2.py data1/processed/X_train_scaled.csv data1/processed/X_test_scaled.csv
+    cmd: py src/train_v2.py data1/processed/X_train_scaled.csv data1/processed/X_test_scaled.csv
       data1/processed/y_train.csv data1/processed/y_test.csv random_forest
     deps:
     - path: data1/processed/X_test_scaled.csv
@@ -214,10 +212,10 @@ stages:
     outs:
     - path: models/random_forest_model.pkl
       hash: md5
-      md5: ddd20cd7f9f3924ba1251e53aaf1b5b8
+      md5: 3bdaa5211e70fbc24e531340312aa36b
       size: 246521
   evaluate_logistic_regression:
-    cmd: python src/evaluate_v2.py models/logistic_regression_model.pkl data1/processed/X_test_scaled.csv
+    cmd: py src/evaluate_v2.py models/logistic_regression_model.pkl data1/processed/X_test_scaled.csv
       data1/processed/y_test.csv reports/logistic_regression_evaluation.txt
     deps:
     - path: data1/processed/X_test_scaled.csv
@@ -230,7 +228,7 @@ stages:
       size: 781
     - path: models/logistic_regression_model.pkl
       hash: md5
-      md5: aa81830b3f2eba85052215a8db465e97
+      md5: f259f0062a6790e5005f57750e286c31
       size: 1531
     - path: src/evaluate_v2.py
       hash: md5
@@ -242,7 +240,7 @@ stages:
       md5: 72e6776ab612888193bdcb758c89e2f7
       size: 402
   evaluate_random_forest:
-    cmd: python src/evaluate_v2.py models/random_forest_model.pkl data1/processed/X_test_scaled.csv
+    cmd: py src/evaluate_v2.py models/random_forest_model.pkl data1/processed/X_test_scaled.csv
       data1/processed/y_test.csv reports/random_forest_evaluation.txt
     deps:
     - path: data1/processed/X_test_scaled.csv
@@ -255,7 +253,7 @@ stages:
       size: 781
     - path: models/random_forest_model.pkl
       hash: md5
-      md5: ddd20cd7f9f3924ba1251e53aaf1b5b8
+      md5: 3bdaa5211e70fbc24e531340312aa36b
       size: 246521
     - path: src/evaluate_v2.py
       hash: md5
