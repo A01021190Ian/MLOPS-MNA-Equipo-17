@@ -1,0 +1,12 @@
+# Build the Docker image
+docker build -t tumor-classification-api .
+
+# Run the Docker container
+docker run -p 8000:8000 tumor-classification-api
+
+# API Endpoints
+GET /: Basic endpoint to check if the server is running.
+POST /metrics: Can either give accuracy, precision and/or recall of the model depending on which one is asked
+
+# Test the API
+curl -Method Post -Uri "http://localhost:8000/metrics" -Headers @{"Content-Type" = "application/json" } -Body '{"metric": ["accuracy","precision","recall"]}'
